@@ -49,7 +49,7 @@ def build_snowman_graphic(num_wrong_guesses):
     """
 
     # use slicing to get the snowman lines we need
-    lines = SNOWMAN_IMAGE[:num_wrong_guesses - 1]
+    lines = SNOWMAN_IMAGE[:num_wrong_guesses ]
     return "\n".join(lines)
 
 
@@ -76,8 +76,9 @@ def get_letter_from_user(word_dict, wrong_letters):
 def build_word_dict(word):
     word_dict = {}
     for letter in word:
-        word_dict[letter] = False
-
+        if letter.isalpha():
+            word_dict[letter] = False 
+    print(word_dict)
     return word_dict
 
 
@@ -92,13 +93,12 @@ def is_word_guessed(word_dict):
 def build_game_board(word, word_dict):
     output_letters = []
     for elem in word:
-        if elem in word_dict:
-            output_letters += elem
-        elif word_dict[elem]:
-            output_letters += elem
-        else:
+        if elem in word_dict and not word_dict[elem]:
             output_letters += "_"
-
+        elif elem in word_dict and word_dict[elem]:
+            output_letters += elem
+        elif elem in ["-","_"," "]:
+            output_letters += " "
     return " ".join(output_letters)
 
 
